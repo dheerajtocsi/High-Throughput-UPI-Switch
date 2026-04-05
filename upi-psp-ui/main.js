@@ -94,23 +94,25 @@ function initPaymentFlow() {
             const txnId = Math.random().toString(36).substr(2, 9).toUpperCase();
             
             // Phase 1: Gateway
-            logToConsole(`GATEWAY: Received request for ${txnId}`, 'gateway');
-            await new Promise(r => setTimeout(r, 100));
-            logToConsole(`GATEWAY: Idempotency OK. Creating envelope.`, 'gateway');
+            logToConsole(`GATEWAY: Received ${txnId}. Validating X-Transaction-Id and Idempotency...`, 'gateway');
+            await new Promise(r => setTimeout(r, 150));
+            logToConsole(`GATEWAY: Security Check PASSED. Serializing Protobuf Envelope...`, 'gateway');
 
             // Phase 2: Kafka
-            logToConsole(`KAFKA: Producing event to 'upi.transactions.initiate'`, 'kafka');
-            await new Promise(r => setTimeout(r, 50));
+            logToConsole(`KAFKA: Producing event to 'upi.transactions.initiate' [Partition 2]`, 'kafka');
+            await new Promise(r => setTimeout(r, 100));
+            logToConsole(`KAFKA: ACK received. Offset: 145902. Leader Election stable.`, 'kafka');
 
             // Phase 3: Routing
-            logToConsole(`ROUTING: Consumed ${txnId}. Selecting bank route...`, 'routing');
-            await new Promise(r => setTimeout(r, 100));
-            logToConsole(`ROUTING: Bank connection UP. Authorization received.`, 'routing');
+            logToConsole(`ROUTING: Consumed ${txnId}. Applying weighted routing logic...`, 'routing');
+            await new Promise(r => setTimeout(r, 200));
+            logToConsole(`ROUTING: NPCI Auth-Code: 99x0A2 secured. Event Produced to status-topic.`, 'routing');
 
             // Phase 4: Ledger
-            logToConsole(`LEDGER: Consumed status success for ${txnId}`, 'ledger');
-            logToConsole(`LEDGER: Persisting to Oracle XE (ACID Audit)...`, 'ledger');
-            await new Promise(r => setTimeout(r, 50));
+            logToConsole(`LEDGER: Received status event for ${txnId}`, 'ledger');
+            logToConsole(`LEDGER: Database ACID Sync: Oracle XE (Row-Level Locking active)...`, 'ledger');
+            await new Promise(r => setTimeout(r, 100));
+            logToConsole(`LEDGER: Balance Cache refreshed (Redis LRU). Audit trail complete.`, 'ledger');
             
             const payload = {
                 transactionId: txnId,
@@ -123,13 +125,13 @@ function initPaymentFlow() {
             const result = await ApiService.sendPayment(payload);
 
             showStatus('Success! Transaction ID: ' + result.data.transactionId, 'success');
-            logToConsole(`SYSTEM: Flow complete for ${txnId} in 300ms.`, 'system');
+            logToConsole(`SYSTEM: Full Transaction Lifecycle: 550ms (Simulated Portfolio Flow)`, 'system');
 
-            // Wait for Kafka to process and then refresh
+            // Wait for simulator to 'persist' and then refresh
             setTimeout(async () => {
                 await refreshData();
                 modal.style.display = 'none';
-            }, 1500);
+            }, 1000);
 
         } catch (error) {
             showStatus(error.message || 'Payment failed', 'error');

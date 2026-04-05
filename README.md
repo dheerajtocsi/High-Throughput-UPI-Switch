@@ -143,8 +143,8 @@ The `upi-psp-ui` is configured for seamless deployment on Netlify. A `netlify.to
 2.  Netlify will automatically detect the **Base Directory** (`upi-psp-ui`) and **Build Command** (`npm run build`).
 3.  Click **Deploy**, and your glassmorphic PSP UI will be live!
 
-> [!NOTE]
-> Since the backend services (Spring Boot) require Kafka and Oracle, the live frontend will default to **"Live Simulation Mode"** unless it can reach a hosted version of the `upi-gateway`.
+> [!TIP]
+> **Live Simulation Mode**: The hosted demo is powered by a **High-Fidelity Transaction Simulator**. It visualizes the entire internal lifecycle (Kafka, Routing, Ledger) without requiring you to run a local cluster, making it perfect for instant recruiter reviews.
 
 ---
 

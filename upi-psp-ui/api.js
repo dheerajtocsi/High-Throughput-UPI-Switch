@@ -68,11 +68,12 @@ export const ApiService = {
                 status: txn.status
             }));
         } catch (error) {
-            // Return rich mock history if ledger is down
+            // Return rich mock history if ledger is down (High-fidelity portfolio fallback)
             return [
-                { id: 'TXN-A101', title: 'Spotify Premium', date: 'Just now', amount: -149.00, type: 'debit', icon: '🎵' },
-                { id: 'TXN-B202', title: 'Zomato Ltd', date: '2 min ago', amount: -675.00, type: 'debit', icon: '🍕' },
-                { id: 'TXN-C303', title: 'Rent Payment', date: '1 hour ago', amount: -22000.00, type: 'debit', icon: '🏠' }
+                { id: 'TXN-A101', title: 'Spotify Premium', date: 'Oct 26, 2:00 PM', amount: -149.00, type: 'debit', icon: '🎵' },
+                { id: 'TXN-B202', title: 'Zomato Ltd', date: 'Oct 25, 10:20 PM', amount: -675.00, type: 'debit', icon: '🍕' },
+                { id: 'TXN-C303', title: 'Rent Payment', date: 'Oct 01, 09:00 AM', amount: -22000.00, type: 'debit', icon: '🏠' },
+                { id: 'TXN-D404', title: 'Cash Deposit', date: 'Sep 28, 11:30 AM', amount: 50000.00, type: 'credit', icon: '🏦' }
             ];
         }
     }

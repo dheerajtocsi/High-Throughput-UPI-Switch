@@ -41,8 +41,10 @@
             </div>
         </header>
 
-        <!-- Main Dashboard -->
-        <main class="dashboard-main">
+        <!-- Main Views Container -->
+        <div id="views-container">
+            <!-- Home View -->
+            <main id="home-view" class="active-view dashboard-main">
             <!-- Wallet Card Segment -->
             <section class="wallet-segment">
                 <div class="wallet-card glow-card">
@@ -144,7 +146,55 @@
                     <!-- Loaded dynamically via main.js -->
                 </div>
             </section>
-        </main>
+            </main>
+            
+            <!-- Wealth View -->
+            <main id="wealth-view" class="dashboard-main" style="display: none;">
+                <section class="wealth-segment">
+                    <div class="wealth-card glow-card">
+                        <div class="card-header">
+                            <span>INVESTMENTS & ASSETS</span>
+                        </div>
+                        <div class="wealth-stats">
+                            <span class="label">Net Portfolio Value</span>
+                            <h2>₹2,84,500.00</h2>
+                            <div class="growth-tag positive">+12.5% YoY</div>
+                        </div>
+                    </div>
+                </section>
+                <section class="actions-segment">
+                    <h3>PORTFOLIO BREAKDOWN</h3>
+                    <div class="wealth-list">
+                        <div class="wealth-item">
+                            <div class="item-icon gold">🟡</div>
+                            <div class="item-info"><h4>Digital Gold</h4><span>Current: ₹45,200</span></div>
+                        </div>
+                        <div class="wealth-item">
+                            <div class="item-icon mutual">📈</div>
+                            <div class="item-info"><h4>Mutual Funds</h4><span>3 active SIPs</span></div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Profile View -->
+            <main id="profile-view" class="dashboard-main" style="display: none;">
+                <section class="profile-segment">
+                    <div class="profile-card">
+                        <div class="profile-large-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Alex+Riaz&background=2563eb&color=fff&size=80" alt="Profile">
+                        </div>
+                        <h3>Dheeraj Kumar</h3>
+                        <span class="vpa-text">dheeraj.kumar@finneonet</span>
+                        <div class="profile-stats">
+                            <div class="stat"><span>Account Limit</span><h4>₹1,00,000</h4></div>
+                            <div class="stat"><span>KYC Status</span><h4>Verified ✅</h4></div>
+                        </div>
+                        <button class="action-btn-main reset-app-btn" style="background: rgba(239, 68, 68, 0.1); color: var(--error); border-color: var(--error);">Reset Simulation Data</button>
+                    </div>
+                </section>
+            </main>
+        </div>
 
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
@@ -207,7 +257,30 @@
             </div>
         </div>
     </div>
-    <script type="module" src="/main.js"></script>
+        <!-- PhonePe Style Overlays -->
+        <div id="processing-overlay" class="overlay">
+            <div class="spinner-container">
+                <div class="neo-spinner"></div>
+                <p>Securing with Bank Gateway...</p>
+            </div>
+        </div>
+
+        <div id="success-screen" class="overlay">
+            <div class="success-content">
+                <div class="check-container">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+                <h2>Payment Successful!</h2>
+                <p id="success-txn-id">TXN: 992837465</p>
+                <h3 id="success-amount">₹0.00</h3>
+                <button class="action-btn-main close-success">Back to Home</button>
+            </div>
+        </div>
+
+        <script type="module" src="/main.js"></script>
 </body>
 
 </html>

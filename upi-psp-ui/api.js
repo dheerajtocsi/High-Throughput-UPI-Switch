@@ -1,7 +1,8 @@
 // FinTech NEO - Unified API Service Layer
-const WALLET_BASE_URL = 'http://localhost:8080/api/v1';
-const UPI_GATEWAY_URL = 'http://localhost:8081/api/v1/upi';
-const UPI_LEDGER_URL = 'http://localhost:8083/api/v1/ledger';
+// Use Environment Variables for deployment, fallback to localhost for dev
+const WALLET_BASE_URL = import.meta.env.VITE_WALLET_API_URL || 'http://localhost:8080/api/v1';
+const UPI_GATEWAY_URL = import.meta.env.VITE_UPI_GATEWAY_URL || 'http://localhost:8081/api/v1/upi';
+const UPI_LEDGER_URL = import.meta.env.VITE_UPI_LEDGER_URL || 'http://localhost:8083/api/v1/ledger';
 
 export const ApiService = {
     // Wallet Integration

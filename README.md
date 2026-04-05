@@ -15,6 +15,17 @@ An enterprise-grade, event-driven UPI (Unified Payments Interface) Switch engine
 ### 🚀 **UI Overview (Mobile-First PSP)**
 Our premium glassmorphic dashboard provides users with real-time transaction insights and account management.
 
+
+```markdown
+## Screenshots
+
+![Mobile Dashboard](docs/assets/live_success_dashboard.png)
+
+![Live Transaction Success](docs/assets/live_success_dashboard.png)
+
+![Integrated Management](docs/assets/final_dashboard.png)
+```
+
 ````carousel
 ![Mobile Dashboard](docs/assets/live_success_dashboard.png)
 <!-- slide -->

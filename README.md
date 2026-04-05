@@ -19,11 +19,11 @@ Our premium glassmorphic dashboard provides users with real-time transaction ins
 ```markdown
 ## Screenshots
 
-![Mobile Dashboard](docs/assets/live_success_dashboard.png)
+![Mobile Dashboard](assets/live_success_dashboard.png)
 
-![Live Transaction Success](docs/assets/live_success_dashboard.png)
+![Live Transaction Success](assets/live_success_dashboard.png)
 
-![Integrated Management](docs/assets/final_dashboard.png)
+![Integrated Management](assets/final_dashboard.png)
 ```
 
 ````carousel

@@ -27,7 +27,7 @@ Our premium glassmorphic dashboard provides users with real-time transaction ins
 ### 📹 **Live System Demo (Event-Driven Simulation)**
 Witness the complete, sub-200ms transaction lifecycle. The demo visualizes every micro-service event: Gateway validation, Kafka production, Routing engine logic, and Oracle XE persistence.
 
-![Live Transaction Flow](docs/assets/live_simulation_demo.webp)
+![Live Transaction Flow](docs/assets/e2e_demo.webp)
 
 ---
 

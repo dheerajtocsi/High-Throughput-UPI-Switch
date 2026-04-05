@@ -1,0 +1,49 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: upi-ledger-service
+
+  # Oracle Configuration (PCI-DSS Audit Trail)
+  datasource:
+    url: jdbc:oracle:thin:@${ORACLE_HOST:localhost}:${ORACLE_PORT:1521}:${ORACLE_SERVICE:XEPDB1}
+    username: ${ORACLE_USER:upi_user}
+    password: ${ORACLE_PASSWORD:upi_pass}
+    driver-class-name: oracle.jdbc.OracleDriver
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        jdbc:
+          batch_size: 50
+    show-sql: false
+
+  # Redis Configuration (Balance Optimization)
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  # Kafka Configuration (Listen to Status Updates)
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    consumer:
+      group-id: upi-ledger-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.enterprise.upi.common.dto"
+        spring.json.value.default.type: "com.enterprise.upi.common.dto.TransactionEvent"
+
+# Liquibase for Schema Management
+liquibase:
+  change-log: classpath:db/changelog/db.changelog-master.xml
+  enabled: true
+
+logging:
+  level:
+    com.enterprise.upi: DEBUG

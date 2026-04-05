@@ -1,0 +1,85 @@
+version: '3.9'
+
+services:
+
+  # ─── Oracle XE 21c (PCI-DSS Ledger Storage) ─────────────────────────────────
+  oracle-db:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: upi-oracle
+    environment:
+      ORACLE_PASSWORD: UpiOracle123!
+      ORACLE_DATABASE: UPIDB
+      APP_USER: upi_user
+      APP_USER_PASSWORD: upi_pass
+    ports:
+      - "1521:1521"
+    volumes:
+      - upi_oracle_data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 120s
+    networks:
+      - upi-network
+
+  # ─── Redis 7 (Idempotency & Balance Cache) ──────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: upi-redis
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - upi_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - upi-network
+
+  # ─── Apache Kafka (Event-Driven Backbone) ───────────────────────────────────
+  kafka:
+    image: bitnami/kafka:3.6
+    container_name: upi-kafka
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+    environment:
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - upi_kafka_data:/bitnami/kafka
+    networks:
+      - upi-network
+
+  # ─── Kafka UI (Redpanda Console) ───────────────────────────────────────────
+  kafka-ui:
+    image: docker.redpanda.com/redpandadata/console:latest
+    container_name: upi-kafka-ui
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8080"
+    environment:
+      KAFKA_BROKERS: kafka:9092
+    networks:
+      - upi-network
+
+volumes:
+  upi_oracle_data:
+  upi_redis_data:
+  upi_kafka_data:
+
+networks:
+  upi-network:
+    driver: bridge

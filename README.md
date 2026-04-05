@@ -15,14 +15,7 @@ An enterprise-grade, event-driven UPI (Unified Payments Interface) Switch engine
 ### 🚀 **UI Overview (Mobile-First PSP)**
 Our premium glassmorphic dashboard provides users with real-time transaction insights and account management.
 
-<!--````carousel -->
 ![Mobile Dashboard](docs/assets/live_success_dashboard.png)
-<!-- slide -->
-![Live Transaction Success](docs/assets/live_success_dashboard.png)
-<!-- slide -->
-![Integrated Management](docs/assets/final_dashboard.png)
-<!-- ```` -->
-
 
 ### 📹 **Live System Demo (Event-Driven Simulation)**
 Witness the complete, sub-200ms transaction lifecycle. The demo visualizes every micro-service event: Gateway validation, Kafka production, Routing engine logic, and Oracle XE persistence.

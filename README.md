@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🏦 High-Throughput UPI Switch
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-brightgreen)](https://spring.io/projects/spring-boot)
@@ -181,3 +182,7 @@ python3 performance_test.py 5000
 
 ---
 *Created with ❤️ for the High-Speed Future of Payments.*
+=======
+# High-Throughput-UPI-Switch
+High-Throughput UPI Switch
+>>>>>>> 1aebaea803a2367f5596723c8b994869bd4ce028

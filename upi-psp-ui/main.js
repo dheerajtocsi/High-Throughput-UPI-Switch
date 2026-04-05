@@ -5,6 +5,7 @@ let transactions = [];
 document.addEventListener('DOMContentLoaded', async () => {
     await refreshData();
     initPaymentFlow();
+    initQuickActions();
     initAnimations();
 });
 
@@ -139,6 +140,67 @@ function initPaymentFlow() {
             submitPay.disabled = false;
             submitPay.innerHTML = 'Authorize Transaction';
         }
+    };
+}
+
+function initQuickActions() {
+    const btnScan = document.getElementById('btn-scan');
+    const btnContacts = document.getElementById('btn-contacts');
+    const btnBills = document.getElementById('btn-bills');
+    const btnAddMoney = document.querySelector('.add-money-btn');
+    const btnSeeAll = document.querySelector('.see-all');
+
+    btnScan.onclick = () => {
+        logToConsole('CAMERA: Initializing QR Scanner...', 'system');
+        setTimeout(() => {
+            logToConsole('SCANNER: Decoding UPI QR [Merchant: Starbucks]...', 'gateway');
+            alert('Scan & Pay Simulation: Pointing to starbucks@upi. Enter amount manually in the payment modal.');
+            const modal = document.getElementById('payment-modal');
+            document.getElementById('receiver-vpa').value = 'starbucks@upi';
+            modal.style.display = 'block';
+        }, 800);
+    };
+
+    btnContacts.onclick = () => {
+        logToConsole('CONTACTS: Querying secure P2P contact enclave...', 'system');
+        setTimeout(() => {
+            logToConsole('CONTACTS: Found 142 linked UPI VPAs. Selecting top result.', 'routing');
+            alert('Pay Contacts Simulation: Selecting "Dheeraj Kumar" (dheeraj@upi)');
+            const modal = document.getElementById('payment-modal');
+            document.getElementById('receiver-vpa').value = 'dheeraj@upi';
+            modal.style.display = 'block';
+        }, 600);
+    };
+
+    btnBills.onclick = () => {
+        logToConsole('BBPS: Querying Bharat Bill Pay System [BBPS] for dues...', 'gateway');
+        setTimeout(() => {
+            logToConsole('BBPS: Unpaid Bill Found (Airtel Fiber - ₹999.00).', 'ledger');
+            alert('Pay Bills Simulation: Found Airtel Fiber bill. Loading payment envelope...');
+            const modal = document.getElementById('payment-modal');
+            document.getElementById('receiver-vpa').value = 'airtel.bbps@upi';
+            document.getElementById('pay-amount').value = '999.00';
+            modal.style.display = 'block';
+        }, 1000);
+    };
+
+    btnAddMoney.onclick = () => {
+        logToConsole('BANK: Connecting to External NetBanking Gateway...', 'gateway');
+        setTimeout(() => {
+            const amount = prompt('Add Money Simulation: Enter amount to top up (INR)', '5000');
+            if (amount) {
+                logToConsole(`BANK: 3DS Auth Success. Credits pending for ₹${amount}.`, 'routing');
+                logToConsole(`LEDGER: Persisting credit entry to Oracle XE...`, 'ledger');
+                alert(`Top-Up Success: ₹${amount} added via simulated bank gateway.`);
+                refreshData();
+            }
+        }, 500);
+    };
+
+    btnSeeAll.onclick = (e) => {
+        e.preventDefault();
+        logToConsole('LEDGER: Retrieving full 30-day transaction history...', 'ledger');
+        alert('Ledger Insight: Displaying your full transaction history...');
     };
 }
 

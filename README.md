@@ -15,18 +15,12 @@ An enterprise-grade, event-driven UPI (Unified Payments Interface) Switch engine
 ### 🚀 **UI Overview (Mobile-First PSP)**
 Our premium glassmorphic dashboard provides users with real-time transaction insights and account management.
 
-````carousel
-![Mobile Dashboard](docs/assets/mobile_dashboard.png)
-<!-- slide -->
-![Live Transaction Success](docs/assets/live_success_dashboard.png)
-<!-- slide -->
-![Integrated Management](docs/assets/final_dashboard.png)
-````
+![Mobile Dashboard](docs/assets/live_success_dashboard.png)
 
 ### 📹 **Live System Demo (Event-Driven Simulation)**
 Witness the complete, sub-200ms transaction lifecycle. The demo visualizes every micro-service event: Gateway validation, Kafka production, Routing engine logic, and Oracle XE persistence.
 
-![Live Transaction Flow](docs/assets/live_simulation_demo.webp)
+![Live Transaction Flow](docs/assets/e2e_demo.webp)
 
 ---
 
@@ -193,5 +187,7 @@ python3 performance_test.py 5000
 - [ ] **Multi-Bank Reconciler**: Automated engine for EOD-7 reconciliation with Bank partner settlement files.
 - [ ] **WebHooks for Merchants**: Real-time callback hooks for payment confirmations on external merchant apps.
 
+---
+*Created with ❤️ for the High-Speed Future of Payments.*
 ---
 *Created with ❤️ for the High-Speed Future of Payments.*

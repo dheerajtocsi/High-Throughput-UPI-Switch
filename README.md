@@ -16,7 +16,7 @@ An enterprise-grade, event-driven UPI (Unified Payments Interface) Switch engine
 Our premium glassmorphic dashboard provides users with real-time transaction insights and account management.
 
 ````carousel
-![Mobile Dashboard](docs/assets/mobile_dashboard.png)
+![Mobile Dashboard](docs/assets/live_success_dashboard.png)
 <!-- slide -->
 ![Live Transaction Success](docs/assets/live_success_dashboard.png)
 <!-- slide -->

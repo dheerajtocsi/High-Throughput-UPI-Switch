@@ -8,10 +8,13 @@ export const ApiService = {
     // Wallet Integration
     async getWalletBalance() {
         try {
-            // Note: In a real app, we'd pass the JWT token here
-            // const response = await fetch(`${WALLET_BASE_URL}/wallets/me`); 
-            // Mocking balance for now to ensure UI works even if Wallet Auth is complex
-            return { balance: 14580.30, currency: 'INR' };
+            // Check for persistent dummy balance first (Portfolio fallback)
+            let balance = localStorage.getItem('neo_wallet_balance');
+            if (balance === null) {
+                balance = '14580.30';
+                localStorage.setItem('neo_wallet_balance', balance);
+            }
+            return { balance: parseFloat(balance), currency: 'INR' };
         } catch (error) {
             console.error('Error fetching wallet balance:', error);
             return { balance: 0, error: true };
@@ -38,9 +41,27 @@ export const ApiService = {
             return await response.json();
         } catch (error) {
             console.warn('Backend not reachable, entering LIVE SIMULATION MODE...');
-            // Mimic Kafka processing latency (Sub-200ms target)
             await new Promise(resolve => setTimeout(resolve, 150)); 
             
+            // Persistence Logic: Save to localStorage for demo realism
+            const localTxns = JSON.parse(localStorage.getItem('neo_local_txns') || '[]');
+            const newTxn = {
+                transactionId: payload.transactionId,
+                title: `Sent to ${payload.merchantVpa}`,
+                date: new Date().toLocaleString(),
+                amount: -parseFloat(payload.amount),
+                type: 'debit',
+                icon: '💸',
+                status: 'SUCCESS'
+            };
+            localTxns.unshift(newTxn);
+            localStorage.setItem('neo_local_txns', JSON.stringify(localTxns.slice(0, 10)));
+            
+            // Update persistent balance
+            let balance = parseFloat(localStorage.getItem('neo_wallet_balance') || '14580.30');
+            balance -= parseFloat(payload.amount);
+            localStorage.setItem('neo_wallet_balance', balance.toFixed(2));
+
             return {
                 success: true,
                 message: 'Transaction accepted and produced to Kafka (SIMULATED)',
@@ -68,13 +89,16 @@ export const ApiService = {
                 status: txn.status
             }));
         } catch (error) {
-            // Return rich mock history if ledger is down (High-fidelity portfolio fallback)
-            return [
+            // Merge persistent local transactions with seed data for demo
+            const localTxns = JSON.parse(localStorage.getItem('neo_local_txns') || '[]');
+            const seedTxns = [
                 { id: 'TXN-A101', title: 'Spotify Premium', date: 'Oct 26, 2:00 PM', amount: -149.00, type: 'debit', icon: '🎵' },
                 { id: 'TXN-B202', title: 'Zomato Ltd', date: 'Oct 25, 10:20 PM', amount: -675.00, type: 'debit', icon: '🍕' },
                 { id: 'TXN-C303', title: 'Rent Payment', date: 'Oct 01, 09:00 AM', amount: -22000.00, type: 'debit', icon: '🏠' },
                 { id: 'TXN-D404', title: 'Cash Deposit', date: 'Sep 28, 11:30 AM', amount: 50000.00, type: 'credit', icon: '🏦' }
             ];
+            
+            return [...localTxns, ...seedTxns];
         }
     }
 };

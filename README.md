@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🏦 High-Throughput UPI Switch
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-brightgreen)](https://spring.io/projects/spring-boot)
@@ -93,7 +92,7 @@ graph TD
     RE --> |Status Update| KAFKA_STAT["Kafka: upi.transactions.status"]
     
     KAFKA_STAT --> |Consume| LS["Ledger Service"]
-    LS --> |ACID Retention| ORA["Oracle XE 21c"]
+    LS --> |ACID Retention| ORA[(Oracle XE 21c)]
     LS --> |Balance Cache Refresh| REDIS
 ```
 
@@ -141,6 +140,20 @@ npm install && npm run dev
 
 ---
 
+## 🚀 Deployment
+
+### **Frontend (Netlify)**
+The `upi-psp-ui` is configured for seamless deployment on Netlify. A `netlify.toml` has been provided in the root to handle the mono-repo build.
+
+1.  Connect your GitHub repository to [Netlify](https://app.netlify.com).
+2.  Netlify will automatically detect the **Base Directory** (`upi-psp-ui`) and **Build Command** (`npm run build`).
+3.  Click **Deploy**, and your glassmorphic PSP UI will be live!
+
+> [!NOTE]
+> Since the backend services (Spring Boot) require Kafka and Oracle, the live frontend will default to **"Live Simulation Mode"** unless it can reach a hosted version of the `upi-gateway`.
+
+---
+
 ## 📖 API Reference (Developer Portal)
 
 ### **Process Payment**
@@ -182,7 +195,3 @@ python3 performance_test.py 5000
 
 ---
 *Created with ❤️ for the High-Speed Future of Payments.*
-=======
-# High-Throughput-UPI-Switch
-High-Throughput UPI Switch
->>>>>>> 1aebaea803a2367f5596723c8b994869bd4ce028

@@ -1,0 +1,4 @@
+[build]
+  base = "upi-psp-ui"
+  command = "npm install && npm run build"
+  publish = "dist"

@@ -1,0 +1,47 @@
+# User-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Java/Spring Boot
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/resources/architecture.png
+!**/src/main/resources/*.webp
+*.class
+*.log
+*.ctxt
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+
+# Node/Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm/
+.eslintcache
+
+# IDEs
+.idea/
+*.iml
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+.nb-gradle/
+
+# Infrastructure
+*.sqlite
+docker-volumes/
